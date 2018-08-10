@@ -25,8 +25,8 @@ defmodule CoinbaseCommerce.Request do
 
   def process_response_body(body) do
     body
-    |> Poison.decode!
-    |> keys_to_atoms
+    |> Poison.decode!()
+    |> keys_to_atoms()
   end
 
   defp get_default_api_key() do
@@ -42,9 +42,11 @@ defmodule CoinbaseCommerce.Request do
   def keys_to_atoms(string_key_map) when is_map(string_key_map) do
     for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), keys_to_atoms(val)}
   end
+
   def keys_to_atoms(string_key_map) when is_list(string_key_map) do
     for n <- string_key_map, do: keys_to_atoms(n)
   end
+
   def keys_to_atoms(string_key_map) do
     string_key_map
   end

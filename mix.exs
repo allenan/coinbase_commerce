@@ -26,7 +26,8 @@ defmodule CoinbaseCommerce.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
   end
 
