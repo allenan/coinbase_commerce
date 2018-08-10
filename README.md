@@ -11,7 +11,7 @@ Install by adding `coinbase_commerce` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:coinbase_commerce, "~> 0.1.0"}
+    {:coinbase_commerce, "~> 0.2.0"}
   ]
 end
 ```
