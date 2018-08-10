@@ -1,18 +1,6 @@
 defmodule CoinbaseCommerce do
   @moduledoc """
-  Documentation for CoinbaseCommerce.
+  An HTTP client for Coinbase Commerce
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> CoinbaseCommerce.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end

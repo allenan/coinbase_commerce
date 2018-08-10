@@ -1,6 +1,28 @@
 # CoinbaseCommerce
 
-**TODO: Add description**
+## Progress
+
+This is a work in progress. PRs gladly accepted!
+
+- [X] Authentication
+- [ ] Pagination
+- [ ] Errors
+- [X] Charges
+  - [X] Resource Type
+  - [X] List
+  - [X] Show
+  - [X] Create
+- [ ] Checkouts
+  - [ ] Resource Type
+  - [ ] List
+  - [ ] Show
+  - [ ] Create
+  - [ ] Update
+  - [ ] Delete
+- [ ] Events
+  - [ ] Resource Type
+  - [ ] List
+  - [ ] Show
 
 ## Installation
 
