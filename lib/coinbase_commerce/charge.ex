@@ -27,28 +27,29 @@ defmodule CoinbaseCommerce.Charge do
     :addresses
   ]
 
-  def create(body) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.post!("/charges", body)
-
-    make_charge(data)
-  end
-
   def list do
     %HTTPoison.Response{body: %{data: data, pagination: _pagination}} =
       Request.get!("/charges")
 
-    for charge <- data, do: make_charge(charge)
+    charges = for charge <- data, do: make_struct(charge)
+    {:ok, charges}
   end
 
   def show(id) do
     %HTTPoison.Response{body: %{data: data}} =
       Request.get!("/charges/#{id}")
 
-    make_charge(data)
+    {:ok, make_struct(data)}
   end
 
-  defp make_charge(data) do
+  def create(params) do
+    %HTTPoison.Response{body: %{data: data}} =
+      Request.post!("/charges", params)
+
+    {:ok, make_struct(data)}
+  end
+
+  defp make_struct(data) do
     struct(Charge, data)
   end
 end

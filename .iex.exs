@@ -1,0 +1,3 @@
+alias CoinbaseCommerce.Charge
+alias CoinbaseCommerce.Checkout
+alias CoinbaseCommerce.Event
