@@ -20,9 +20,6 @@ use Mix.Config
 #
 #     config :logger, level: :info
 #
-config :coinbase_commerce,
-  api_key: "fb5c3c5e-57ca-494b-80c0-a845d54619d6",
-  webhook_shared_secret: "11657e55-890b-4a7c-91f4-f702bd36a901"
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
