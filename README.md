@@ -1,8 +1,8 @@
-[![Hex.pm](https://img.shields.io/hexpm/v/coinbase_commerce.svg?maxAge=2592000)](https://hex.pm/packages/coinbase_commerce)
-
 # Coinbase Commerce
 
 An Elixir library for working with the [Coinbase Commerce](https://commerce.coinbase.com/) API ([Documentation](https://hexdocs.pm/coinbase_commerce))
+
+[![Hex.pm](https://img.shields.io/hexpm/v/coinbase_commerce.svg?maxAge=2592000)](https://hex.pm/packages/coinbase_commerce)
 
 ## Installation
 
