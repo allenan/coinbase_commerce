@@ -19,37 +19,59 @@ defmodule CoinbaseCommerce.Checkout do
   ]
 
   def list do
-    %HTTPoison.Response{body: %{data: data, pagination: _pagination}} =
-      Request.get!("/checkouts")
-
-    checkouts = for checkout <- data, do: make_struct(checkout)
-    {:ok, checkouts}
+    case Request.get!("/checkouts") do
+      %HTTPoison.Response{body: %{data: data, pagination: _pagination}, status_code: 200} ->
+        checkouts = for checkout <- data, do: make_struct(checkout)
+        {:ok, checkouts}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def show(id) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.get!("/checkouts/#{id}")
-
-    {:ok, make_struct(data)}
+    case Request.get!("/checkouts/#{id}") do
+      %HTTPoison.Response{body: %{data: data}} ->
+        {:ok, make_struct(data)}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def create(params) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.post!("/checkouts", params)
-
-    {:ok, make_struct(data)}
+    case Request.post("/checkouts", params) do
+      %HTTPoison.Response{body: %{data: data}, status_code: 200} ->
+        {:ok, make_struct(data)}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def update(id, params) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.put!("/checkouts/#{id}", params)
-
-    {:ok, make_struct(data)}
+    case Request.put!("/checkouts/#{id}", params) do
+      %HTTPoison.Response{body: %{data: data}, status_code: 200} ->
+        {:ok, make_struct(data)}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def delete(id) do
-    %HTTPoison.Response{} = Request.delete!("/checkouts/#{id}")
-    :ok
+    case Request.delete!("/checkouts/#{id}") do
+      %HTTPoison.Response{status_code: 200} ->
+        :ok
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   defp make_struct(data) do

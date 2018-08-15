@@ -28,25 +28,37 @@ defmodule CoinbaseCommerce.Charge do
   ]
 
   def list do
-    %HTTPoison.Response{body: %{data: data, pagination: _pagination}} =
-      Request.get!("/charges")
-
-    charges = for charge <- data, do: make_struct(charge)
-    {:ok, charges}
+    case Request.get!("/charges") do
+      %HTTPoison.Response{body: %{data: data, pagination: _pagination}, status_code: 200} ->
+        charges = for charge <- data, do: make_struct(charge)
+        {:ok, charges}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def show(id) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.get!("/charges/#{id}")
-
-    {:ok, make_struct(data)}
+    case Request.get!("/charges/#{id}") do
+      %HTTPoison.Response{body: %{data: data}} ->
+        {:ok, make_struct(data)}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   def create(params) do
-    %HTTPoison.Response{body: %{data: data}} =
-      Request.post!("/charges", params)
-
-    {:ok, make_struct(data)}
+    case Request.post("/charges", params) do
+      %HTTPoison.Response{body: %{data: data}, status_code: 200} ->
+        {:ok, make_struct(data)}
+      {:ok, %HTTPoison.Response{} = response} ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+      %HTTPoison.Response{} = response ->
+        {:error, CoinbaseCommerce.Error.make_error(response)}
+    end
   end
 
   defp make_struct(data) do
