@@ -18,11 +18,11 @@ defmodule CoinbaseCommerce.Checkout do
     :local_price
   ]
 
-  def list do
-    case Request.get!("/checkouts") do
-      %HTTPoison.Response{body: %{data: data, pagination: _pagination}, status_code: 200} ->
+  def list(params \\ %{}) do
+    case Request.get!("/checkouts", [], params: params) do
+      %HTTPoison.Response{body: %{data: data, pagination: pagination}, status_code: 200} ->
         checkouts = for checkout <- data, do: make_struct(checkout)
-        {:ok, checkouts}
+        {:ok, checkouts, pagination}
       {:ok, %HTTPoison.Response{} = response} ->
         {:error, CoinbaseCommerce.Error.make_error(response)}
       %HTTPoison.Response{} = response ->

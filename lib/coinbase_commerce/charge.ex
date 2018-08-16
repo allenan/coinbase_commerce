@@ -27,11 +27,11 @@ defmodule CoinbaseCommerce.Charge do
     :addresses
   ]
 
-  def list do
-    case Request.get!("/charges") do
-      %HTTPoison.Response{body: %{data: data, pagination: _pagination}, status_code: 200} ->
+  def list(params \\ %{}) do
+    case Request.get!("/charges", [], params: params) do
+      %HTTPoison.Response{body: %{data: data, pagination: pagination}, status_code: 200} ->
         charges = for charge <- data, do: make_struct(charge)
-        {:ok, charges}
+        {:ok, charges, pagination}
       {:ok, %HTTPoison.Response{} = response} ->
         {:error, CoinbaseCommerce.Error.make_error(response)}
       %HTTPoison.Response{} = response ->

@@ -16,11 +16,11 @@ defmodule CoinbaseCommerce.Event do
     :data
   ]
 
-  def list do
-    case Request.get!("/events") do
-      %HTTPoison.Response{body: %{data: data, pagination: _pagination}, status_code: 200} ->
+  def list(params \\ %{}) do
+    case Request.get!("/events", [], params: params) do
+      %HTTPoison.Response{body: %{data: data, pagination: pagination}, status_code: 200} ->
         events = for event <- data, do: make_struct(event)
-        {:ok, events}
+        {:ok, events, pagination}
       {:ok, %HTTPoison.Response{} = response} ->
         {:error, CoinbaseCommerce.Error.make_error(response)}
       %HTTPoison.Response{} = response ->
