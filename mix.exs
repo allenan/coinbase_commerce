@@ -7,7 +7,7 @@ defmodule CoinbaseCommerce.MixProject do
       name: "coinbase_commerce",
       description: "Simple Elixir wrapper for the Coinbase Commerce API",
       source_url: "https://github.com/allenan/coinbase_commerce",
-      version: "0.2.0",
+      version: "0.3.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
